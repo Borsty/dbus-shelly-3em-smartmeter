@@ -43,4 +43,4 @@ then
     echo >> $rclocalname
 fi
 
-grep -qxF "$SCRIPT_DIR/install.sh" $rclocalname || echo "/bin/bash $SCRIPT_DIR/install.sh" >> $rclocalname
+grep -qxF "/bin/bash $SCRIPT_DIR/install.sh" $rclocalname || echo "/bin/bash $SCRIPT_DIR/install.sh" >> $rclocalname

@@ -8,4 +8,4 @@ kill $(pgrep -f "python $SCRIPT_DIR")
 kill $(pgrep -f 'supervise $DAEMON_NAME')
 chmod a-x $SCRIPT_DIR/service/run
 
-grep -qxF "$SCRIPT_DIR/install.sh" $rclocalname && sed -i "#/bin/bash $SCRIPT_DIR/install.sh#d" $rclocalname
+grep -qxF "/bin/bash $SCRIPT_DIR/install.sh" $rclocalname && sed -i "#/bin/bash $SCRIPT_DIR/install.sh#d" $rclocalname
