@@ -14,4 +14,4 @@ supervise_pid=$(pgrep -f 'supervise $DAEMON_NAME')
 [ ! -z $python_pid ] && kill $python_pid
 [ ! -z $supervise_pid ] && kill $supervise_pid
 
-grep -qxF "/bin/bash $SCRIPT_DIR/install.sh" $rclocalname && sed -i "#/bin/bash $SCRIPT_DIR/install.sh#d" $rclocalname
+grep -qxF "/bin/bash $SCRIPT_DIR/install.sh" $rclocalname && sed -i "\|/bin/bash ${SCRIPT_DIR}/install.sh|d" $rclocalname
