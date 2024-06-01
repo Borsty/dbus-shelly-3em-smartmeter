@@ -23,7 +23,8 @@ from vedbus import VeDbusService
 
 class DbusShelly3emService:
   def __init__(self, paths, productname='Shelly 3EM', connection='Shelly 3EM HTTP JSON service'):
-    config = self._getConfig()
+    self.config = self._getConfig()
+    config = self.config
     deviceinstance = int(config['DEFAULT']['DeviceInstance'])
     customname = config['DEFAULT']['CustomName']
     role = config['DEFAULT']['Role']
@@ -96,7 +97,7 @@ class DbusShelly3emService:
 
 
   def _getSignOfLifeInterval(self):
-    config = self._getConfig()
+    config = self.config
     value = config['DEFAULT']['SignOfLifeLog']
 
     if not value:
@@ -106,7 +107,7 @@ class DbusShelly3emService:
 
 
   def _getShellyPosition(self):
-    config = self._getConfig()
+    config = self.config
     value = config['DEFAULT']['Position']
 
     if not value:
@@ -116,7 +117,7 @@ class DbusShelly3emService:
 
 
   def _getShellyStatusUrl(self):
-    config = self._getConfig()
+    config = self.config
     accessType = config['DEFAULT']['AccessType']
 
     if accessType == 'OnPremise':
@@ -157,7 +158,7 @@ class DbusShelly3emService:
     try:
       #get data from Shelly 3em
       meter_data = self._getShellyData()
-      config = self._getConfig()
+      config = self.config
 
       try:
         remapL1 = int(config['ONPREMISE']['L1Position'])
