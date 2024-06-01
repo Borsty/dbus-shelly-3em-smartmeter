@@ -239,7 +239,7 @@ def getLogLevel():
 
 def main():
   #configure logging
-  logging.basicConfig(format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', level=logging_level,)
+  logging.basicConfig(format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', level=getLogLevel(),)
 
   try:
       logging.info("Start");
