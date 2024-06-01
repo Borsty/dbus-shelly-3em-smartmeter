@@ -58,7 +58,7 @@ class DbusShelly3emService:
     self._dbusservice.add_path('/ProductName', productname)
     self._dbusservice.add_path('/CustomName', customname)
     self._dbusservice.add_path('/Latency', None)
-    self._dbusservice.add_path('/FirmwareVersion', 0.3)
+    self._dbusservice.add_path('/FirmwareVersion', 0.4)
     self._dbusservice.add_path('/HardwareVersion', 0)
     self._dbusservice.add_path('/Connected', 1)
     self._dbusservice.add_path('/Role', role)
@@ -131,7 +131,18 @@ class DbusShelly3emService:
 
   def _getShellyData(self):
     URL = self._getShellyStatusUrl()
-    meter_r = requests.get(url = URL, timeout=5)
+    met_data = False
+    try:
+        meter_r = requests.get(url = URL, timeout=5)
+        meter_r.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        print ("Http Error:",errh)
+    except requests.exceptions.ConnectionError as errc:
+        print ("Error Connecting:",errc)
+    except requests.exceptions.Timeout as errt:
+        print ("Timeout Error:",errt)
+    except requests.exceptions.RequestException as err:
+        print ("OOps: Something Else",err)
 
     # check for response
     if not meter_r:
@@ -155,11 +166,10 @@ class DbusShelly3emService:
     return True
 
   def _update(self):
+    config = self.config
     try:
       #get data from Shelly 3em
       meter_data = self._getShellyData()
-      config = self.config
-
       try:
         remapL1 = int(config['ONPREMISE']['L1Position'])
       except KeyError:
@@ -170,8 +180,12 @@ class DbusShelly3emService:
         meter_data['emeters'][0] = meter_data['emeters'][remapL1-1]
         meter_data['emeters'][remapL1-1] = old_l1
 
+      if self.config['DEFAULT']['Role'] in ['grid','genset']:
+        self._dbusservice['/Ac/Energy/Reverse'] = ( (meter_data['emeters'][0]['total_returned']/1000) + (meter_data['emeters'][1]['total_returned']/1000) + (meter_data['emeters'][2]['total_returned']/1000) )
+
       #send data to DBus
       self._dbusservice['/Ac/Power'] = meter_data['total_power']
+      self._dbusservice['/Ac/Energy/Forward'] = ( (meter_data['emeters'][0]['total']/1000) + (meter_data['emeters'][1]['total']/1000) + (meter_data['emeters'][2]['total']/1000) )
       self._dbusservice['/Ac/L1/Voltage'] = meter_data['emeters'][0]['voltage']
       self._dbusservice['/Ac/L2/Voltage'] = meter_data['emeters'][1]['voltage']
       self._dbusservice['/Ac/L3/Voltage'] = meter_data['emeters'][2]['voltage']
