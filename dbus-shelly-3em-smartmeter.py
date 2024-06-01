@@ -28,7 +28,7 @@ class DbusShelly3emService:
     customname = config['DEFAULT']['CustomName']
     role = config['DEFAULT']['Role']
 
-    allowed_roles = ['pvinverter','grid','genset']
+    allowed_roles = ['pvinverter','grid','genset','acload']
     if role in allowed_roles:
         servicename = 'com.victronenergy.' + role
     else:
