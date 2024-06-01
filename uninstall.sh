@@ -15,3 +15,6 @@ supervise_pid=$(pgrep -f "supervise ${DAEMON_NAME}")
 [ ! -z $supervise_pid ] && kill $supervise_pid
 
 grep -qxF "/bin/bash $SCRIPT_DIR/install.sh" $rclocalname && sed -i "\|/bin/bash ${SCRIPT_DIR}/install.sh|d" $rclocalname
+[ -d "${SCRIPT_DIR}/service/supervise" ] && rm -rf "${SCRIPT_DIR}/service/supervise"
+[ -d "${SCRIPT_DIR}/service/log/supervise" ] && rm -rf "${SCRIPT_DIR}/service/log/supervise"
+

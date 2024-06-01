@@ -12,8 +12,6 @@ if [ -f $SCRIPT_DIR/current.log ]; then
     rm $SCRIPT_DIR/current.log*
 fi
 
-echo
-
 # set permissions for script files
 chmod a+x $SCRIPT_DIR/install.sh
 chmod 744 $SCRIPT_DIR/install.sh
