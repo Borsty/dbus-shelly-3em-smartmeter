@@ -8,8 +8,8 @@ then
   rm /service/$DAEMON_NAME
 fi
 
-python_pid=$(pgrep -f "python $SCRIPT_DIR")
-supervise_pid=$(pgrep -f 'supervise $DAEMON_NAME')
+python_pid=$(pgrep -f "python ${SCRIPT_DIR}")
+supervise_pid=$(pgrep -f "supervise ${DAEMON_NAME}")
 
 [ ! -z $python_pid ] && kill $python_pid
 [ ! -z $supervise_pid ] && kill $supervise_pid
