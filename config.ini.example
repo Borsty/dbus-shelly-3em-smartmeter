@@ -1,5 +1,4 @@
 [DEFAULT]
-AccessType = OnPremise
 SignOfLifeLog = 1
 CustomName = Shelly 3EM
 DeviceInstance = 40
@@ -11,8 +10,8 @@ Position = 0
 LogLevel=ERROR
 
 [ONPREMISE]
-Host=192.168.2.13
+Hosts=uv.eg.shelly,uv.keller.shelly
 Username=
 Password=
 # Allows to specify which input on the Shelly should correspond to L1 on the Venus/GX device
-L1Position = 1
+L1Position = 3
